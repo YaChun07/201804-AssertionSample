@@ -1,23 +1,32 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using ExpectedObjects;
+using NUnit.Framework;
 
 namespace AssertionSample
 {
-    [TestClass]
+    [TestFixture]
     public class AssertionSample
     {
         private CustomerRepo customerRepo = new CustomerRepo();
 
-        [TestMethod]
+        [Test]
         public void CompareCustomer()
         {
             var actual = customerRepo.Get();
+            var expected = new Customer
+            {
+                Id = 2,
+                Age = 18,
+                Birthday = new DateTime(1990, 1, 26)
+            };
+            
+            expected.ToExpectedObject().ShouldEqual(actual);
 
             //how to assert customer?
         }
 
-        [TestMethod]
+        [Test]
         public void CompareCustomerList()
         {
             var actual = customerRepo.GetAll();
@@ -25,7 +34,7 @@ namespace AssertionSample
             //how to assert customers?
         }
 
-        [TestMethod]
+        [Test]
         public void CompareComposedCustomer()
         {
             var actual = customerRepo.GetComposedCustomer();
@@ -33,7 +42,7 @@ namespace AssertionSample
             //how to assert composed customer?
         }
 
-        [TestMethod]
+        [Test]
         public void PartialCompare_Customer_Birthday_And_Order_Price()
         {
             var actual = customerRepo.GetComposedCustomer();

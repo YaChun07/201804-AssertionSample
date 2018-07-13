@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using NUnit.Framework;
 
 namespace AssertionSample
 {
-    [TestClass]
+    [TestFixture]
     public class AssertExceptionSample
     {
-        [TestMethod]
+        [Test]
         public void Divide_positive()
         {
             var calculator = new Calculator();
@@ -14,7 +14,7 @@ namespace AssertionSample
             Assert.AreEqual(2.5m, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void Divide_Zero()
         {
             var calculator = new Calculator();
@@ -29,10 +29,8 @@ namespace AssertionSample
     {
         public decimal Divide(decimal first, decimal second)
         {
-            if (second == 0)
-            {
-                throw new YouShallNotPassException();
-            }
+            if (second == 0) throw new YouShallNotPassException();
+
             return first / second;
         }
     }
