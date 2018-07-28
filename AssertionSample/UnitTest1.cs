@@ -30,7 +30,24 @@ namespace AssertionSample
         public void CompareCustomerList()
         {
             var actual = customerRepo.GetAll();
+            var expected = new List<Customer>
+            {
+                new Customer()
+                {
+                    Id = 3,
+                    Age = 20,
+                    Birthday = new DateTime(1993, 1, 2)
+                },
 
+                new Customer()
+                {
+                    Id = 4,
+                    Age = 21,
+                    Birthday = new DateTime(1993, 1, 3)
+                }
+            };
+            //CollectionAssert.AreEqual(expected, actual);
+            expected.ToExpectedObject().ShouldEqual(actual);
             //how to assert customers?
         }
 
@@ -38,7 +55,14 @@ namespace AssertionSample
         public void CompareComposedCustomer()
         {
             var actual = customerRepo.GetComposedCustomer();
-
+            var expected = new Customer()
+            {
+                Age = 30,
+                Id = 11,
+                Birthday = new DateTime(1999, 9, 9),
+                Order = new Order { Id = 19, Price = 91 },
+            };
+            expected.ToExpectedObject().ShouldEqual(actual);
             //how to assert composed customer?
         }
 
@@ -47,12 +71,12 @@ namespace AssertionSample
         {
             var actual = customerRepo.GetComposedCustomer();
 
-            var expected = new Customer()
+            var expected = new 
             {
                 Birthday = new DateTime(1999, 9, 9),
-                Order = new Order {Price = 91},
+                Order = new {Price = 91},
             };
-
+            expected.ToExpectedObject().ShouldMatch(actual);
             //how to assert actual is equal to expected?
         }
     }
